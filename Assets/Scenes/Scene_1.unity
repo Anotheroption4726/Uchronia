@@ -123,6 +123,7 @@ GameObject:
   - component: {fileID: 117794525}
   - component: {fileID: 117794527}
   - component: {fileID: 117794526}
+  - component: {fileID: 117794528}
   m_Layer: 0
   m_Name: Population
   m_TagString: Untagged
@@ -259,6 +260,21 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!114 &117794528
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 117794524}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72710609581e2cd48958eb8890c11021, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tile_position: {x: 0, y: 0, z: 1}
+  tile_map: {fileID: 117794527}
+  tile_skin: {fileID: 11400000, guid: 1c106bf04837c5d419160365a0f5e135, type: 2}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -1249,7 +1265,7 @@ Tilemap:
   - first: {x: 7, y: -2, z: 0}
     second:
       m_TileIndex: 1
-      m_TileSpriteIndex: 1
+      m_TileSpriteIndex: 10
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_ObjectToInstantiate: {fileID: 0}
@@ -2622,8 +2638,8 @@ Tilemap:
   m_TileSpriteArray:
   - m_RefCount: 2
     m_Data: {fileID: 21300418, guid: e82a8c8ba367b37488b908fdbb1c4c38, type: 3}
-  - m_RefCount: 1
-    m_Data: {fileID: 21300018, guid: e82a8c8ba367b37488b908fdbb1c4c38, type: 3}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   - m_RefCount: 3
     m_Data: {fileID: 21300346, guid: e82a8c8ba367b37488b908fdbb1c4c38, type: 3}
   - m_RefCount: 2
@@ -2640,8 +2656,8 @@ Tilemap:
     m_Data: {fileID: 21300022, guid: e82a8c8ba367b37488b908fdbb1c4c38, type: 3}
   - m_RefCount: 3
     m_Data: {fileID: 21300414, guid: e82a8c8ba367b37488b908fdbb1c4c38, type: 3}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
+  - m_RefCount: 1
+    m_Data: {fileID: 21300018, guid: e82a8c8ba367b37488b908fdbb1c4c38, type: 3}
   - m_RefCount: 1
     m_Data: {fileID: 21300058, guid: e82a8c8ba367b37488b908fdbb1c4c38, type: 3}
   - m_RefCount: 2
