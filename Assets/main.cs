@@ -21,7 +21,7 @@ public class main : MonoBehaviour
 
     void Update()
     {
-        Thread.Sleep(2000);
+        //Thread.Sleep(2000);
 
          if (Human_class.count_tile(0, 0) == 20)
          {
