@@ -15,6 +15,7 @@ public class Population_script : MonoBehaviour
     public Tilemap tile_ground_water;
     public Tile tile_skin;
     public TileBase water;
+    public TileBase terrain;
     //  public TileBase ground;
     public static int generation = 0;
 
@@ -24,7 +25,11 @@ public class Population_script : MonoBehaviour
         Human_class.population = new List<Human_class>();
         setup();
         Human_class.start();
-        print(grid);
+        for (int i = 0; i < 10; i++) { 
+            for(int j = 0; j < 25; j++) {
+                print(grid[i, j]);
+            }
+        }
 
     }
 
@@ -36,34 +41,28 @@ public class Population_script : MonoBehaviour
         generation++;
     }
 
-    public void display_houses() { 
-        for (int i = 0; i < width; i++) { 
-            for (int j = 0; j < height; j++) {
+   /* public void display_houses() { 
+        for (int i = 0; i < height; i++) { 
+            for (int j = 0; j < width; j++) {
                 return;
             }
         }
-    }   
+    } */  
 
     public void setup() {
         currentCell = tile_ground_water.WorldToCell(transform.position);
-        currentCell.x -= 13;
-        currentCell.y -= 5;
-        for (int i = 0; i < height; i++) {
-            currentCell.x = 0;
-            for (int j = 0; j < width; j++)
+        currentCell.x = -12;
+        currentCell.y = -5;
+        for (int i = 0; i < 10; i++) {
+            currentCell.x = -12;
+            for (int j = 0; j < 24; j++)
             {
-                if (tile_ground_water.GetTile(currentCell) == water)
-                {
-                    print("WATER");
-                    grid[i,j] = "W";
-
-                }
-                else if (tile_ground_water.GetTile(currentCell) != null)
-                {
-                    print("TERRAIN");
-                    grid[i,j] = "T";
-
-                }
+                if (tile_ground_water.GetTile(currentCell) == water)     
+                    grid[i, j] = "W";
+           
+                else if (tile_ground_water.GetTile(currentCell) == terrain || tile_ground_water.GetTile(currentCell) != null)        
+                    grid[i, j] = "T";
+                
                 currentCell.x += 1;
             }
             currentCell.y += 1;
