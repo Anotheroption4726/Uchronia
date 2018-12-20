@@ -36,7 +36,7 @@ public class Human_class
         return result;
     }
 
-    public static void start()
+    public static void setup()
     {
         for (int i = 0; i < 10; i++)
         {
@@ -46,7 +46,7 @@ public class Human_class
     }
 
 
-   public static void update()
+   public static void spawning()
     {
         System.Random rd = new System.Random();
         if (rd.Next(1, 35) % 2 == 0)

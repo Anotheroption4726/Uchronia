@@ -22,13 +22,15 @@ public class Population_script : MonoBehaviour
     void Start()
     {
         Human_class.population = new List<Human_class>();
+        Class_Village.tout_village = new List<Class_Village>();
         setup();
-        Human_class.start();
+        Human_class.setup();
     }
 
     void Update()
     {
-        Human_class.update();
+        Human_class.spawning();
+        Class_Village.check_village();
         print(generation);
         print(Human_class.population.Count);
         generation++;

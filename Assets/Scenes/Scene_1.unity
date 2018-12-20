@@ -19309,3 +19309,4 @@ MonoBehaviour:
   tile_ground_water: {fileID: 1299675786}
   tile_skin: {fileID: 11400000, guid: 0ec90a03cbddd024384d4be3a6107abf, type: 2}
   water: {fileID: 11400000, guid: a5f73b55311a0e14c9277646db3fd8cd, type: 2}
+  terrain: {fileID: 11400000, guid: 351851098edc7e347879004f80000688, type: 2}
