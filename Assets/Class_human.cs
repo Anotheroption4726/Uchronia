@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-
+using UnityEngine.Tilemaps;
 
 public class Human_class
 {
@@ -40,25 +40,46 @@ public class Human_class
     {
         for (int i = 0; i < 10; i++)
         {
-            Human_class pop = new Human_class(0, 0, 10);
+            Human_class pop = new Human_class(0, 0, 0);
             population.Add(pop);
         }
     }
 
 
-   public static void spawning()
+    public static void spawning(int x, int y)
     {
-        System.Random rd = new System.Random();
-        if (rd.Next(1, 35) % 2 == 0)
-        {
-            Human_class pop = new Human_class(0, 0, 10);
+    
+      
+
+            Human_class pop = new Human_class(x -36 , y - 16, 0);
             population.Add(pop);
-        }
-        for (int i = 0; i < population.Count; i++)
+            if (Population_script.generation % 30 == 0)
+            {
+                for (int i = 0; i < population.Count; i++)
+                {
+                    population[i].Age++;
+                    /*if (population[i].Age > 400)
+                        population.RemoveAt(i);*/
+                }
+            }
+        if (population.Count > 10)
         {
-            population[i].Age++;
-            if (population[i].Age > 70)
-                population.RemoveAt(i);
-        }
+            for (int i = 0; i < Population_script.height; i++)
+            {
+                for (int j = 0; j < Population_script.width - 1; j++)
+                {
+                    if (Human_class.count_tile(j - 34, i - 16) > 5 && Class_Village.gridpop[i, j] == "0")
+                    {
+                        Vector2Int tempi = new Vector2Int(j, i);
+                        Vector3Int tempo = new Vector3Int(i - 36 , j - 16, -1);
+                        Class_Village village = new Class_Village(j - 36, i -16, tempi);
+                        Class_Village.tout_village.Add(village);
+                        Class_Village.gridpop[i, j] = "V";
+                        Class_Village.spawn = true;
+
+                    }
+                }
+            }
+        }  
     }
 }
