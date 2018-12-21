@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Tilemaps;
 
 public class Population_script : MonoBehaviour
@@ -17,6 +18,8 @@ public class Population_script : MonoBehaviour
     public  Tilemap tile_population;
     public  TileBase tile_skin;
     public  TileBase water;
+    public  Text display_pop;
+    public Text display_gene;
     public static int generation = 0;
     System.Random rd = new System.Random();
 
@@ -35,11 +38,8 @@ public class Population_script : MonoBehaviour
     {
         Thread.Sleep(1000);
         spawn();
-        print(Human_class.population.Count);
-        for (int i = 0; i < Class_Village.tout_village.Count; i++)
-        {
-            print("Village : " + (i + 1) + " Population : " + Class_Village.tout_village[i].habitant.Count);
-        }
+        display_pop.text = "Population : " + Human_class.population.Count.ToString();
+        display_gene.text = "Generation : " + generation.ToString();
         generation++;
     }
 
