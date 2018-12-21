@@ -38,7 +38,7 @@ public class Population_script : MonoBehaviour
         if (grid[y, x] == "T")
         {
                 Human_class.spawning(x, y);
-                print(Human_class.count_tile(x - 36, y - 16));
+                print(Human_class.count_tile(x - 34, y - 16));
             }
             if (Class_Village.spawn == true)
             {
@@ -48,7 +48,7 @@ public class Population_script : MonoBehaviour
             }/*
         print(generation);*/
              // print(Human_class.population.Count);
-            generation++;
+                         generation++;
         }
 
         public void setup() {
@@ -64,7 +64,7 @@ public class Population_script : MonoBehaviour
 
                     else if (tile_ground_water.GetTile(currentCell) != null)
                         grid[i, j] = "T";
-
+                
                     currentCell.x += 1;
                 }
                 currentCell.y += 1;

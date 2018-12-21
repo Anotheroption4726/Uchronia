@@ -51,7 +51,7 @@ public class Human_class
     
       
 
-            Human_class pop = new Human_class(x -36 , y - 16, 0);
+            Human_class pop = new Human_class(x -34 , y - 16, 0);
             population.Add(pop);
             if (Population_script.generation % 30 == 0)
             {
@@ -71,8 +71,8 @@ public class Human_class
                     if (Human_class.count_tile(j - 34, i - 16) > 5 && Class_Village.gridpop[i, j] == "0")
                     {
                         Vector2Int tempi = new Vector2Int(j, i);
-                        Vector3Int tempo = new Vector3Int(i - 36 , j - 16, -1);
-                        Class_Village village = new Class_Village(j - 36, i -16, tempi);
+                        Vector3Int tempo = new Vector3Int(i - 34 , j - 16, -1);
+                        Class_Village village = new Class_Village(j - 34, i -16, tempi);
                         Class_Village.tout_village.Add(village);
                         Class_Village.gridpop[i, j] = "V";
                         Class_Village.spawn = true;
