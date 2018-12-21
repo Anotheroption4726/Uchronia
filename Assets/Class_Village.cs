@@ -41,10 +41,7 @@ public class Class_Village
         }
         return;
     }
-   
-    public static void check_village() {
-        return;
-    }
+  
     public static void setup()
     {
         for (int i = 0; i < Population_script.height; i++)
@@ -65,9 +62,53 @@ public class Class_Village
                 {
                     Human_class pop = new Human_class(x + Population_script.minus_x, y + Population_script.minus_y, 0);
                     tout_village[index].habitant.Add(pop);
-                    Human_class.population.Add(pop);
                 }
             }
        
+    }
+
+    public static void spawning()
+    {
+        if (Population_script.generation % 12 == 0)
+        {
+            for (int i = 0; i < tout_village.Count; i++)
+            {
+                for (int j = 0; j < tout_village[i].habitant.Count; j++)
+                {
+                    tout_village[i].habitant[j].Age++;
+                    if (tout_village[i].habitant[j].Age > Population_script.death)
+                       tout_village[i].habitant.RemoveAt(j);
+                }
+            }
+        }
+        for (int i = 0; i < tout_village.Count; i++)
+            tout_village[i].spawn_pop_village(tout_village[i].X, tout_village[i].Y, i);
+        spawn_chateau();
+    }
+
+    public static void spawn_chateau()
+    {
+        for (int i = 0; i < Population_script.height; i++)
+        {
+            for (int j = 0; j < Population_script.width; j++)
+            {
+                if (Human_class.count_tile(j + Population_script.minus_x, i + Population_script.minus_y) > Population_script.require_pop && gridpop[i, j] == "0")
+                {
+                    Vector2Int tempi = new Vector2Int(j, i);
+                    Class_Village village = new Class_Village(j + Population_script.minus_x, i + Population_script.minus_y, tempi);
+                    tout_village.Add(village);
+                    Human_class.supp_civ(j + Population_script.minus_x, i + Population_script.minus_y);
+                    gridpop[i, j] = "V";
+                }
+            }
+        }
+    }
+
+    public static int retour_pop() {
+        int result = 0;
+        for (int i = 0; i < tout_village.Count; i++) {
+            result += tout_village[i].habitant.Count;
+        }
+        return result;
     }
 }

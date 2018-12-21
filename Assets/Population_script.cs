@@ -8,57 +8,101 @@ using UnityEngine.Tilemaps;
 
 public class Population_script : MonoBehaviour
 {
+
+    /***************************************************/  
+
     public static int width = 64;
     public static int height = 32;
     public static int minus_x = -34;
     public static int minus_y = -16;
-    public  string[,] grid = new string[height, width];
-    public  Vector3Int currentCell;
+    public static int time_to_wait = 1000;
+    public static int initialisation_population = 200;
+    public static int require_pop = 40;
+    public static int death = 3;
+
+
+    /***************************************************/
+
+
+    public string[,] grid = new string[height, width];
+    public Vector3Int currentCell;
+
+    /***************************************************/
+
     public  Tilemap tile_ground_water;
     public  Tilemap tile_population;
     public  TileBase tile_skin;
     public  TileBase water;
-    public  Text display_pop;
+
+    /***************************************************/
+
+    public Text display_pop;
     public Text display_gene;
     public Text display_village;
+    public Text display_nomade;
+
+    /***************************************************/
+
+
     public static int generation = 0;
     System.Random rd = new System.Random();
 
 
+    /***************************************************/
+
     void Start()
     {
-        Human_class.population = new List<Human_class>();
-        Class_Village.tout_village = new List<Class_Village>();
         setup();
-        Human_class.setup();
-        Class_Village.setup();
     }
+
+    /***************************************************/
 
     void Update()
-    {
-        Thread.Sleep(1000);
+    { 
         spawn();
-        display_pop.text = "Population : " + Human_class.population.Count.ToString();
-        display_gene.text = "Generation : " + generation.ToString();
-        display_village.text = "Villages : " + Class_Village.tout_village.Count.ToString();
+        display_canvas();
         generation++;
+        Thread.Sleep(time_to_wait);
     }
 
+    /***************************************************/
+
     public void spawn() {
-        Human_class.spawning();
-        for (int i = 0; i < height; i++) {
-            for (int j = 0; j < width; j++) {
+        Human_class.spawning_alone();
+        Class_Village.spawning();
+        display_chateau();
+    }
+
+    /***************************************************/
+
+    public void display_canvas() {
+        display_pop.text = "Population : " + Class_Village.retour_pop().ToString();
+        display_gene.text = "Generations : " + generation.ToString();
+        display_village.text = "Villages : " + Class_Village.tout_village.Count.ToString();
+        display_nomade.text = "Nomades : " + Human_class.population.Count.ToString();
+    }
+    
+    /***************************************************/
+
+    public void display_chateau()
+    {
+
+        for (int i = 0; i < height; i++)
+        {
+            for (int j = 0; j < width; j++)
+            {
                 if (Class_Village.gridpop[i, j] == "V")
-                    display_chateau(j + minus_x, i + minus_y, -1);
+                    tile_population.SetTile(new Vector3Int(j + minus_x, i + minus_y, -1), tile_skin);
+
             }
         }
     }
 
-    public void display_chateau(int x, int y, int z) {
-        tile_population.SetTile(new Vector3Int(x, y, z), tile_skin);
-    }
+    /***************************************************/
 
     public void setup() {
+        Human_class.population = new List<Human_class>();
+        Class_Village.tout_village = new List<Class_Village>();
         int x;
         int y;
         int h = 0;
@@ -79,19 +123,19 @@ public class Population_script : MonoBehaviour
                 }
                 currentCell.y += 1;
             }
-        while (h++ < 5)
+        while (h++ < initialisation_population)
         {
             x = rd.Next(0, width);
             y = rd.Next(0, height);
             if (grid[y, x] == "T")
             {
-                for (int i = 0; i < 20; i++)
-                {
-                    Human_class pop = new Human_class(x + minus_x, y + minus_y, 0);
-                    Human_class.population.Add(pop);
-                }
+                Human_class pop = new Human_class(x + minus_x, y + minus_y, 0);
+                Human_class.population.Add(pop);
             }
+
         }
+        Human_class.setup();
+        Class_Village.setup();
 
     }
 }

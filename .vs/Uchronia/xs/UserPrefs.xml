@@ -1,9 +1,9 @@
 ﻿<Properties StartupConfiguration="{7820A01F-B90F-793F-6D66-0F68BF6F5AB3}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Population_script.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Class_Village.cs">
     <Files>
       <File FileName="Assets/Population_script.cs" Line="32" Column="13" />
       <File FileName="Assets/Class_human.cs" Line="58" Column="10" />
-      <File FileName="Assets/Class_Village.cs" Line="53" Column="60" />
+      <File FileName="Assets/Class_Village.cs" Line="53" Column="14" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />

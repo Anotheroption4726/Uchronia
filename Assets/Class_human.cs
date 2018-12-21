@@ -40,37 +40,48 @@ public class Human_class
         return;
     }
 
-
-    public static void spawning()
-    {
-        if (Population_script.generation % 12 == 0)
+    public static void supp_civ(int x, int y) {
+        for (int i = 0; i < population.Count; i++)
         {
-            for (int i = 0; i < population.Count; i++)
+            if (population[i].X == x && population[i].Y == y)
+            {
+                population.RemoveAt(i);
+            }
+        }
+    }
+
+    public static void olding_pop(int x, int y)
+    {
+        for (int i = 0; i < population.Count; i++)
+        {
+            if (population[i].X == x && population[i].Y == y)
             {
                 population[i].Age++;
-                if (population[i].Age > 90)
+                if (population[i].Age == Population_script.death)
                     population.RemoveAt(i);
             }
         }
-        for (int i = 0; i < Class_Village.tout_village.Count; i++)
-        {
-            Class_Village.tout_village[i].spawn_pop_village(Class_Village.tout_village[i].X , Class_Village.tout_village[i].Y, i);
-        }
-        spawn_chateau();
     }
-    public static void spawn_chateau() {
-         for (int i = 0; i < Population_script.height; i++)
+
+    public static void spawning_alone() {
+        for (int i = 0; i < Population_script.height; i++) {
+            for (int j = 0; j < Population_script.width; j++)
             {
-                for (int j = 0; j < Population_script.width; j++)
+                int temp = count_tile(j + Population_script.minus_x, i + Population_script.minus_y);
+                if (temp > 1 && temp < Population_script.require_pop + 1)
                 {
-                    if (Human_class.count_tile(j + Population_script.minus_x, i + Population_script.minus_y) > 15 && Class_Village.gridpop[i, j] == "0")
+                    for (int k = 0; k < temp; k++)
                     {
-                    Vector2Int tempi = new Vector2Int(j, i);
-                        Class_Village village = new Class_Village(j + Population_script.minus_x, i + Population_script.minus_y, tempi);
-                        Class_Village.tout_village.Add(village);
-                        Class_Village.gridpop[i, j] = "V";
+                        if (k % 2 == 0)
+                        {
+                            population.Add(new Human_class(j + Population_script.minus_x, i + Population_script.minus_y, -1));
+                        }
                     }
+                    olding_pop(j + Population_script.minus_x, i + Population_script.minus_y);
                 }
+
             }
+        }
+        return;
     }
 }
