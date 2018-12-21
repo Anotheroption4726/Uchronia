@@ -9,6 +9,8 @@ public class Population_script : MonoBehaviour
 {
     public static int width = 64;
     public static int height = 32;
+    public static int minus_x = -34;
+    public static int minus_y = -16;
     public  string[,] grid = new string[height, width];
     public  Vector3Int currentCell;
     public  Tilemap tile_ground_water;
@@ -16,8 +18,6 @@ public class Population_script : MonoBehaviour
     public  TileBase tile_skin;
     public  TileBase water;
     public static int generation = 0;
-    public static int x;
-    public static int y;
     System.Random rd = new System.Random();
 
 
@@ -28,35 +28,39 @@ public class Population_script : MonoBehaviour
         setup();
         Human_class.setup();
         Class_Village.setup();
-
+            
     }
 
     void Update()
     {
-        int x = rd.Next(0, 64);
-        int y = rd.Next(0, 32);
-        if (grid[y, x] == "T")
+        Thread.Sleep(1000);
+        spawn();
+        print(Human_class.population.Count);
+        for (int i = 0; i < Class_Village.tout_village.Count; i++)
         {
-                Human_class.spawning(x, y);
-                print(Human_class.count_tile(x - 34, y - 16));
-            }
-            if (Class_Village.spawn == true)
-            {
-
-                tile_population.SetTile(new Vector3Int(Class_Village.tout_village[Class_Village.tout_village.Count - 1].X, Class_Village.tout_village[Class_Village.tout_village.Count - 1].Y, -1), tile_skin);
-                Class_Village.spawn = false;
-            }/*
-        print(generation);*/
-             // print(Human_class.population.Count);
-                         generation++;
+            print("Village : " + (i + 1) + " Population : " + Class_Village.tout_village[i].habitant.Count);
         }
+        generation++;
+    }
 
-        public void setup() {
-            currentCell = tile_ground_water.WorldToCell(transform.position);
-            currentCell.x = -34;
-            currentCell.y = -16;
-            for (int i = 0; i < height; i++) {
-                currentCell.x = -34;
+    public void spawn() {
+        Human_class.spawning();
+        if (Class_Village.spawn == true)
+        {
+            tile_population.SetTile(new Vector3Int(Class_Village.tout_village[Class_Village.tout_village.Count - 1].X, Class_Village.tout_village[Class_Village.tout_village.Count - 1].Y, -1), tile_skin);
+            Class_Village.spawn = false;
+        }
+    }
+
+    public void setup() {
+        int x;
+        int y;
+        int h = 0;
+        currentCell = tile_ground_water.WorldToCell(transform.position);
+        currentCell.x = minus_x;
+        currentCell.y = minus_y;
+        for (int i = 0; i < height; i++) {
+                currentCell.x = minus_x;
                 for (int j = 0; j < width; j++)
                 {
                     if (tile_ground_water.GetTile(currentCell) == water)
@@ -69,7 +73,19 @@ public class Population_script : MonoBehaviour
                 }
                 currentCell.y += 1;
             }
+        while (h++ < 5)
+        {
+            x = rd.Next(0, width);
+            y = rd.Next(0, height);
+            if (grid[y, x] == "T")
+            {
+                for (int i = 0; i < 20; i++)
+                {
+                    Human_class pop = new Human_class(x + minus_x, y + minus_y, 0);
+                    Human_class.population.Add(pop);
+                }
+            }
         }
-    
-    
+
+    }
 }

@@ -14,6 +14,7 @@ public class Class_Village
     public List<Vector2Int>vecteur;
     public static List<Class_Village> tout_village;
     public static bool spawn = false;
+    Random rd = new Random();
 
     public int X { get => x; set => x = value; }
     public int Y { get => y; set => y = value; }
@@ -55,5 +56,19 @@ public class Class_Village
             }
         }
         return;
+    }
+
+    public  void spawn_pop_village(int x, int y, int index)
+    {
+            for (int j = 1; j < habitant.Count; j++)
+            {
+                if (rd.Next(1, j) % rd.Next(1, j) == 0)
+                {
+                    Human_class pop = new Human_class(x + Population_script.minus_x, y + Population_script.minus_y, 0);
+                    tout_village[index].habitant.Add(pop);
+                    Human_class.population.Add(pop);
+                }
+            }
+       
     }
 }

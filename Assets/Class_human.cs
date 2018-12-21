@@ -11,12 +11,11 @@ public class Human_class
     private int y;
     private int age;
     public static List<Human_class> population;
-
     public int X { get => x; set => x = value; }
     public int Y { get => y; set => y = value; }
     public int Age { get => age; set => age = value; }
 
-    Human_class(int x, int y, int age)
+    public Human_class(int x, int y, int age)
     {
         X = x;
         Y = y;
@@ -38,41 +37,37 @@ public class Human_class
 
     public static void setup()
     {
-        for (int i = 0; i < 10; i++)
-        {
-            Human_class pop = new Human_class(0, 0, 0);
-            population.Add(pop);
-        }
+        return;
     }
 
 
-    public static void spawning(int x, int y)
+    public static void spawning()
     {
-    
-      
-
-            Human_class pop = new Human_class(x -34 , y - 16, 0);
-            population.Add(pop);
-            if (Population_script.generation % 30 == 0)
-            {
-                for (int i = 0; i < population.Count; i++)
-                {
-                    population[i].Age++;
-                    /*if (population[i].Age > 400)
-                        population.RemoveAt(i);*/
-                }
-            }
-        if (population.Count > 10)
+        if (Population_script.generation % 12 == 0)
         {
-            for (int i = 0; i < Population_script.height; i++)
+            for (int i = 0; i < population.Count; i++)
+            {
+                population[i].Age++;
+                if (population[i].Age > 90)
+                    population.RemoveAt(i);
+            }
+        }
+        for (int i = 0; i < Class_Village.tout_village.Count; i++)
+        {
+            Class_Village.tout_village[i].spawn_pop_village(Class_Village.tout_village[i].X , Class_Village.tout_village[i].Y, i);
+        }
+        spawn_chateau();
+    }
+    public static void spawn_chateau() {
+         for (int i = 0; i < Population_script.height; i++)
             {
                 for (int j = 0; j < Population_script.width - 1; j++)
                 {
-                    if (Human_class.count_tile(j - 34, i - 16) > 5 && Class_Village.gridpop[i, j] == "0")
+                    if (Human_class.count_tile(j + Population_script.minus_x, i + Population_script.minus_y) > 15 && Class_Village.gridpop[i, j] == "0")
                     {
                         Vector2Int tempi = new Vector2Int(j, i);
-                        Vector3Int tempo = new Vector3Int(i - 34 , j - 16, -1);
-                        Class_Village village = new Class_Village(j - 34, i -16, tempi);
+                        Vector3Int tempo = new Vector3Int(i + Population_script.minus_x, j + Population_script.minus_y, -1);
+                        Class_Village village = new Class_Village(j + Population_script.minus_x, i + Population_script.minus_y, tempi);
                         Class_Village.tout_village.Add(village);
                         Class_Village.gridpop[i, j] = "V";
                         Class_Village.spawn = true;
@@ -80,6 +75,5 @@ public class Human_class
                     }
                 }
             }
-        }  
     }
 }
