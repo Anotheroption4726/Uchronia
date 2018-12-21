@@ -20,6 +20,7 @@ public class Population_script : MonoBehaviour
     public  TileBase water;
     public  Text display_pop;
     public Text display_gene;
+    public Text display_village;
     public static int generation = 0;
     System.Random rd = new System.Random();
 
@@ -31,7 +32,6 @@ public class Population_script : MonoBehaviour
         setup();
         Human_class.setup();
         Class_Village.setup();
-            
     }
 
     void Update()
@@ -40,16 +40,22 @@ public class Population_script : MonoBehaviour
         spawn();
         display_pop.text = "Population : " + Human_class.population.Count.ToString();
         display_gene.text = "Generation : " + generation.ToString();
+        display_village.text = "Villages : " + Class_Village.tout_village.Count.ToString();
         generation++;
     }
 
     public void spawn() {
         Human_class.spawning();
-        if (Class_Village.spawn == true)
-        {
-            tile_population.SetTile(new Vector3Int(Class_Village.tout_village[Class_Village.tout_village.Count - 1].X, Class_Village.tout_village[Class_Village.tout_village.Count - 1].Y, -1), tile_skin);
-            Class_Village.spawn = false;
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                if (Class_Village.gridpop[i, j] == "V")
+                    display_chateau(j + minus_x, i + minus_y, -1);
+            }
         }
+    }
+
+    public void display_chateau(int x, int y, int z) {
+        tile_population.SetTile(new Vector3Int(x, y, z), tile_skin);
     }
 
     public void setup() {

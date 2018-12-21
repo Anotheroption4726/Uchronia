@@ -13,7 +13,6 @@ public class Class_Village
     public static string[,] gridpop = new string[Population_script.height, Population_script.width];
     public List<Vector2Int>vecteur;
     public static List<Class_Village> tout_village;
-    public static bool spawn = false;
     Random rd = new Random();
 
     public int X { get => x; set => x = value; }
@@ -50,7 +49,7 @@ public class Class_Village
     {
         for (int i = 0; i < Population_script.height; i++)
         {
-            for (int j = 0; j < Population_script.width - 1; j++)
+            for (int j = 0; j < Population_script.width ; j++)
             {
                 gridpop[i, j] = "0";
             }

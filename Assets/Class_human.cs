@@ -61,17 +61,14 @@ public class Human_class
     public static void spawn_chateau() {
          for (int i = 0; i < Population_script.height; i++)
             {
-                for (int j = 0; j < Population_script.width - 1; j++)
+                for (int j = 0; j < Population_script.width; j++)
                 {
                     if (Human_class.count_tile(j + Population_script.minus_x, i + Population_script.minus_y) > 15 && Class_Village.gridpop[i, j] == "0")
                     {
-                        Vector2Int tempi = new Vector2Int(j, i);
-                        Vector3Int tempo = new Vector3Int(i + Population_script.minus_x, j + Population_script.minus_y, -1);
+                    Vector2Int tempi = new Vector2Int(j, i);
                         Class_Village village = new Class_Village(j + Population_script.minus_x, i + Population_script.minus_y, tempi);
                         Class_Village.tout_village.Add(village);
                         Class_Village.gridpop[i, j] = "V";
-                        Class_Village.spawn = true;
-
                     }
                 }
             }
