@@ -18,8 +18,10 @@ public class Population_script : MonoBehaviour
     public static int minus_y = -16;
     public static int time_to_wait = 1000;
     public static int initialisation_population = 200;
-    public static int require_pop = 40;
-    public static int death = 10;
+    public static int require_pop = 20;
+    public static int death = 40;
+    public static int prob_to_born = 97;
+    public static int month = 12;
 
 
     /***************************************************/
@@ -51,32 +53,24 @@ public class Population_script : MonoBehaviour
 
     /***************************************************/
 
-    void Start()
-    {
+    void Start() {
         setup();
     }
 
     /***************************************************/
 
     public void display_canvas() {
-        display_pop.text = "Population : " + (Class_Village.retour_pop() + Human_class.population.Count).ToString();
-        display_gene.text = "Generations : " + generation.ToString();
-        display_village.text = "Villages : " + Class_Village.tout_village.Count.ToString();
+        display_pop.text = "Pop : " + (Class_Village.retour_pop() + Human_class.population.Count).ToString();
+        display_gene.text = "Gen : " + generation.ToString();
+        display_village.text = "Castle : " + Class_Village.tout_village.Count.ToString();
         display_nomade.text = "Nomades : " + Human_class.population.Count.ToString();
     }
 
-    public void display_chateau()
-    {
-
+    public void display_chateau() {
         for (int i = 0; i < height; i++)
-        {
             for (int j = 0; j < width; j++)
-            {
                 if (Class_Village.gridpop[i, j] == "V")
                     tile_population.SetTile(new Vector3Int(j + minus_x, i + minus_y, -1), tile_skin);
-
-            }
-        }
     }
 
     /***************************************************/
@@ -113,12 +107,10 @@ public class Population_script : MonoBehaviour
         int x;
         int y;
         int h = 0;
-        while (h++ < initialisation_population)
-        {
+        while (h++ < initialisation_population){
             x = rd.Next(0, width);
             y = rd.Next(0, height);
-            if (grid[y, x] == "T")
-            {
+            if (grid[y, x] == "T"){
                 Human_class pop = new Human_class(x + minus_x, y + minus_y, -1);
                 Human_class.population.Add(pop);
             }
@@ -128,21 +120,18 @@ public class Population_script : MonoBehaviour
 
     /***************************************************/
 
-    void Update()
-    {
+    void Update() {
         spawn();
         display_canvas();
         generation++;
-        //Thread.Sleep(time_to_wait);
+        Thread.Sleep(time_to_wait);
     }
 
     /***************************************************/
 
-    public void spawn()
-    {
+    public void spawn() {
         Human_class.spawning_alone();
         Class_Village.spawning();
         display_chateau();
     }
-
 }
