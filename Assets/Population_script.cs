@@ -20,7 +20,7 @@ public class Population_script : MonoBehaviour
     public static int initialisation_population = 200;
     public static int require_pop = 20;
     public static int death = 40;
-    public static int prob_to_born = 97;
+    public static int prob_to_born = 93;
     public static int month = 12;
 
 
@@ -58,6 +58,12 @@ public class Population_script : MonoBehaviour
     }
 
     /***************************************************/
+
+
+    public void display() {
+        display_canvas();
+        display_chateau();
+    }
 
     public void display_canvas() {
         display_pop.text = "Pop : " + (Class_Village.retour_pop() + Human_class.population.Count).ToString();
@@ -122,9 +128,20 @@ public class Population_script : MonoBehaviour
 
     void Update() {
         spawn();
-        display_canvas();
+        castle_expansion();
+        display();
         generation++;
         Thread.Sleep(time_to_wait);
+    }
+
+    public void castle_expansion()
+    {
+        Class_Village.can_expand();
+        for (int i = 0; i < Class_Village.tout_village.Count; i++) { 
+            if (Class_Village.tout_village[i].vecteur_temp.Count > 0 && Class_Village.tout_village[i].habitant.Count > 100) {
+                Class_Village.expand_castle(i, rd.Next(0, Class_Village.tout_village[i].vecteur_temp.Count));
+            }
+        }
     }
 
     /***************************************************/
@@ -132,6 +149,5 @@ public class Population_script : MonoBehaviour
     public void spawn() {
         Human_class.spawning_alone();
         Class_Village.spawning();
-        display_chateau();
     }
 }

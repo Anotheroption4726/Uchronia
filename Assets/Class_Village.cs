@@ -23,12 +23,13 @@ public class Class_Village
 
     /***************************************************/
 
-    public List<Vector2Int>vecteur;
+    public List<Vector2Int> vecteur;
+    public List<Vector2Int> vecteur_temp;
 
     /***************************************************/
 
     public static List<Class_Village> tout_village;
-    Random rd = new Random();
+    static Random rd = new Random();
 
     /***************************************************/
 
@@ -37,6 +38,7 @@ public class Class_Village
         X = x;
         Y = y;
         vecteur = new List<Vector2Int>();
+        vecteur_temp = new List<Vector2Int>();
         vecteur.Add(vec);
         this.add_habitant(x, y);
     }
@@ -97,5 +99,86 @@ public class Class_Village
         for (int i = 0; i < tout_village.Count; i++)
             result += tout_village[i].habitant.Count;
         return result;
+    }
+
+    /***************************************************/
+
+
+    public static void expand_castle(int index_village, int index_vecteur) {
+        bool good = false;
+        do {
+            int rand = rd.Next(0, 3);
+            Vector2Int vec = new Vector2Int(tout_village[index_village].vecteur[index_vecteur].x, tout_village[index_village].vecteur[index_vecteur].y);
+            switch (rand) {
+                case 0:
+                    if (check_coord(vec.x,vec.y - 1) == true)
+                    {
+                        vec.y--;
+                        tout_village[index_village].vecteur.Add(vec);
+                        gridpop[vec.y, vec.x] = "V";
+                        good = true;
+                    }
+                    break;
+
+                case 1:
+                    if (check_coord(vec.x + 1, vec.y) == true)
+                    {
+                        vec.x++;
+                        tout_village[index_village].vecteur.Add(vec);
+                        gridpop[vec.y, vec.x] = "V";
+                        good = true;
+                    }
+                    break;
+
+                case 2:
+                    if (check_coord(vec.x, vec.y + 1) == true)
+                    {
+                        vec.y++;
+                        tout_village[index_village].vecteur.Add(vec);
+                        gridpop[vec.y, vec.x] = "V";
+                        good = true;
+                    }
+                    break;
+
+                case 3:
+                    if (check_coord(vec.x + 1, vec.y) == true)
+                    {
+                        vec.x--;
+                        tout_village[index_village].vecteur.Add(vec);
+                        gridpop[vec.y, vec.x] = "V";
+                        good = true;
+                    }
+                    break;
+
+            }
+        } while (good == false);
+    }
+
+    public static bool check_coord(int x, int y) {
+        if ((x < Population_script.width && x >= 0) && (y < Population_script.height && y >= 0))
+            return true;
+        return false;
+    }
+
+    public static void can_expand() {
+        for (int i = 0; i < tout_village.Count; i++) {
+            if (tout_village[i].vecteur_temp.Count > 0)
+                tout_village[i].vecteur_temp.Clear();
+            for (int j = 0; j < tout_village[i].vecteur.Count; j++) {
+                if (check_castle_neighbour(tout_village[i].vecteur[j]) == true) {
+                    tout_village[i].vecteur_temp.Add(tout_village[i].vecteur[j]);
+                }
+            }
+        }
+    }
+
+    public static bool check_castle_neighbour(Vector2Int vector)
+    {
+        if (((check_coord(vector.x, vector.y - 1)) && (gridpop[vector.y - 1, vector.x] == "0"))
+         || ((check_coord(vector.x, vector.y + 1)) && (gridpop[vector.y + 1, vector.x] == "0"))
+         || ((check_coord(vector.x + 1, vector.y)) && (gridpop[vector.y, vector.x + 1] == "0"))
+         || ((check_coord(vector.x - 1, vector.y)) && (gridpop[vector.y, vector.x - 1] == "0")))
+            return true;
+        return false;
     }
 }
