@@ -16,6 +16,7 @@ public class Class_Village
     /***************************************************/
 
     public List<Human_class> habitant = new List<Human_class>();
+ 
 
     /***************************************************/
 
@@ -54,7 +55,12 @@ public class Class_Village
     public static void setup() {
         for (int i = 0; i < Population_script.height; i++)
             for (int j = 0; j < Population_script.width; j++)
-                gridpop[i, j] = "0";
+            {
+                if (Population_script.check_terrain(j, i) == true)
+                    gridpop[i, j] = "0";
+                else
+                    gridpop[i, j] = "9";
+            }
     }
 
     /***************************************************/
@@ -111,7 +117,7 @@ public class Class_Village
             Vector2Int vec = new Vector2Int(tout_village[index_village].vecteur[index_vecteur].x, tout_village[index_village].vecteur[index_vecteur].y);
             switch (rand) {
                 case 0:
-                    if (check_coord(vec.x,vec.y - 1) == true)
+                    if (check_coord(vec.x,vec.y - 1) == true && gridpop[vec.y - 1 , vec.x] == "0")
                     {
                         vec.y--;
                         tout_village[index_village].vecteur.Add(vec);
@@ -121,7 +127,7 @@ public class Class_Village
                     break;
 
                 case 1:
-                    if (check_coord(vec.x + 1, vec.y) == true)
+                    if (check_coord(vec.x + 1, vec.y) == true && gridpop[vec.y, vec.x + 1] == "0")
                     {
                         vec.x++;
                         tout_village[index_village].vecteur.Add(vec);
@@ -131,7 +137,7 @@ public class Class_Village
                     break;
 
                 case 2:
-                    if (check_coord(vec.x, vec.y + 1) == true)
+                    if (check_coord(vec.x, vec.y + 1) == true && gridpop[vec.y + 1, vec.x] == "0")
                     {
                         vec.y++;
                         tout_village[index_village].vecteur.Add(vec);
@@ -141,7 +147,7 @@ public class Class_Village
                     break;
 
                 case 3:
-                    if (check_coord(vec.x + 1, vec.y) == true)
+                    if (check_coord(vec.x - 1, vec.y) == true && gridpop[vec.y, vec.x - 1] == "0")
                     {
                         vec.x--;
                         tout_village[index_village].vecteur.Add(vec);
