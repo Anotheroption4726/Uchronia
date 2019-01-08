@@ -48,6 +48,7 @@ public class Population_script : MonoBehaviour
 
 
     public static int generation = 0;
+    private bool coroutineRuning = false;
     System.Random rd = new System.Random();
 
 
@@ -59,11 +60,12 @@ public class Population_script : MonoBehaviour
 
 
 
-    public IEnumerator wait() {
-        Debug.LogError("error");
-        Debug.Log("error");
-        WaitForSeconds temp = new WaitForSeconds(time);
-        yield return temp;
+    IEnumerator Everyxseconds()
+    {
+        coroutineRuning = true;
+        yield return new WaitForSeconds(0.5f);
+        print(Time.time);
+        coroutineRuning = false;
     }
 
     /***************************************************/
@@ -133,12 +135,18 @@ public class Population_script : MonoBehaviour
         }
     }
     void Update() {
-        spawn();
+        /*spawn();
         castle_expansion();
         display();
-        //StartCoroutine("wait");
-        Thread.Sleep(1000);
-        generation++;
+        generation++;*/
+        if (coroutineRuning == false)
+        {
+            StartCoroutine(Everyxseconds());
+            spawn();
+            castle_expansion();
+            display();
+            generation++;
+        }
     }
 
     public void castle_expansion()
